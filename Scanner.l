@@ -1,13 +1,14 @@
 
 %{
 #include <stdio.h>
+#include "Parser.tab.h"
 int linha=1;
 %}
 
 digito 		[0-9]
 letra 		[A-Za-z]
 operador_mat 	"*"|"/"|"+"|"-"|"%"
-operacor_log 	"<"|">"|"<="|">="|"=="|"!="|"&&"|"||"
+operador_log 	"<"|">"|"<="|">="|"=="|"!="|"&&"|"||"
 enter 		[\n]
 tab 		[\t]
 espaco 		" "
@@ -43,7 +44,6 @@ void		{	printf("palavra reservada: VOID\t-> linha: %d\n", yytext, linha);		retur
 "]"		{	printf("delimitador de escopo: %s\t-> linha: %d\n",yytext, linha);		return FECHA_COL;	}
 
 {tipo} 		{	printf("tipo: %s\t-> linha: %d\n", yytext, linha);				return TIPO;		}
-
 
 {string} 	{	printf("string de identificadores: %s\t-> linha: %d\n",yytext, linha);		return STRING;		}
 {comentario} 	{	printf("comentario em linha: %s\t-> linha: %d\n",yytext, linha);		return COMENTARIO;	}
