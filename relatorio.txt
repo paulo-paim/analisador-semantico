@@ -1,0 +1,98 @@
+COMPILADORES
+
+TRABALHO 2 -ANALISADOR SINTÁTICO
+
+Nomes:						RAs:
+	Bruno Ferreira Leal				151042161
+	Paulo Henrique Paim dos Santos			
+
+
+Introdução
+	Para o presente trabalho, foi utilizado como fonte as saídas providas pelo analisador léxico desenvolvido no trabalho 1. No entanto, foram adotadas algumas medidas e realizadas algumas alterações no analisador léxico para que o mesmo atendesse as especificações deste segundo trabalho.
+
+
+Objetivo
+	Desenvolvimento de um gerador de analisador sintático utilizando a ferramenta GNU Bison em conjunto com a ferramenta de análise léxica Flex.
+
+Linguagem
+	A linguagem L aceita pelo analisador sintático desenvolvido será especificada pelas regras a seguir.
+	As regras foram tiradas do arquivo Parser.tab.h gerado pelo Bison.
+	Os tokens reconhecidos são:
+
+		%token <sval> IDENTIFICADOR
+		%token <valor_inteiro> INTEIRO
+		%token <sval> SEPARADOR
+		%token <sval> VARIAVEL
+		%token <sval> INSTRUCAO
+		%token <sval> ATRIBUICAO
+		%token <sval> SE
+		%token <sval> ABRE_CHAVE
+		%token <sval> FECHA_CHAVE
+		%token <sval> OPERADOR_LOGICO
+		%token <sval> ABRE_COLCHETE
+		%token <sval> FECHA_COLCHETE
+		%token <sval> ENQUANTO
+		%token <sval> INICIO
+		%token <sval> FIM
+
+Segue as regras da gramatica que definem a linguagem:
+- Regra que define a estrutura do início do programa:
+	Inicio:
+		INICIO corpo_programa FIM {printf("programa ok");}
+
+- Regra que define a estrutura do corpo do programa:
+	corpo_programa:
+		|criacao_variaveis corpo_programa
+		|comando_atribuicao corpo_programa
+		|comando_escolha corpo_programa
+		|comando_repeticao corpo_programa
+		;
+
+- Regra que define como serão criadas variáveis:
+	criacao_variaveis:
+		|VARIAVEL lista_variaveis
+		;
+
+- Regra que define o encadeamento de variáveis:
+	lista_variaveis:
+		IDENTIFICADOR SEPARADOR lista_variaveis {printf("variaveis : %s\n", $1);}
+		|IDENTIFICADOR  INSTRUCAO{printf("variaveis : %s\n", $1);}
+		;
+
+- Regra de define a estrutura do comando de atribuição:
+	comando_atribuicao:
+		|IDENTIFICADOR ATRIBUICAO INTEIRO INSTRUCAO {printf("comando de atribuicao: %s <- %s\n", $1, $3);}
+		;
+
+- Regra que define a estrutura do comando de seleção:
+	comando_escolha:
+		|SE ABRE_CHAVE IDENTIFICADOR OPERADOR_LOGICO INTEIRO FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando logico\n");}
+		;
+
+
+- Regra que define a estrutura do comando de repetição:
+	comando_repeticao:
+		|ENQUANTO ABRE_CHAVE IDENTIFICADOR OPERADOR_LOGICO INTEIRO FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando repeticao\n");}
+		;
+  
+
+Conteúdo
+	Segue uma breve descrição dos arquivos enviados:
+		Scanner.l – código do gerador de analisador léxico (Flex)
+		Parser.y – código do gerador de analisador sintático (Bison)
+		sample.txt – exemplo de código aceito pela linguagem
+
+Para compilar e executar
+	Execute a seguinte sequência de comandos:
+	- Criação do arquivo de análiser léxica:
+		flex -o Scanner Scanner.l
+
+	- Criação do arquivo de análise sintática:
+		bison -d Paser.y
+
+	- Criação do analisador
+		gcc Scanner.c Parser.tab.c -o analisador -lfl
+
+Saída do analisador
+	O analisador acusará erros de sintaxe como falta de parênteses, chaves, ponto e vírgula, declarações incompletas, etc.
+	Caso não exista erros sintáticos a análise será concluída com sucesso.
