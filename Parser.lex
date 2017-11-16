@@ -6,7 +6,7 @@ letra 		[A-Za-z]
 operador_mat 	"*"|"/"|"+"|"-"|"%"
 operador_log 	"<"|">"|"<="|">="|"=="|"!="|"&&"|"||"
 
-
+operador_matematico {operador_mat}
 identificador 		{letra}({digito}*{letra}*)*
 inteiro 		[+-]?{digito}+
 real 		{int}[.]{digito}+
@@ -31,13 +31,13 @@ atribuicao 			[=]
 "fim();" return(FIM);
 "funcao" return(INICIO_FUNCAO);
 
-"*" return(OPERADOR_MATEMATICO);
+{operador_matematico} return(OPERADOR_MATEMATICO);
 
 
-"int" {
+"int"|"real"|"caractere"|"logico" {
 yylval.sval = malloc(strlen(yytext));
 strncpy(yylval.sval, yytext, strlen(yytext));
-return(VARIAVEL);
+return(TIPO_PRIMITIVO);
 }
 
 {operador_log} {
@@ -51,7 +51,8 @@ return(VARIAVEL);
 }
 
 {inteiro} {
-yylval.valor_inteiro = (int*)yytext;
+yylval.sval = malloc(strlen(yytext));
+strncpy(yylval.sval, yytext, strlen(yytext));
 return(INTEIRO);
 }
 

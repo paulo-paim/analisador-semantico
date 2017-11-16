@@ -1,9 +1,15 @@
 inicio();
-X=1*(A);
-int x,y,z;
+X=1*(A+B*(paulo-henrique));
+real x,y,z;
+logico i,a;
 x=10;
 se ( x < 10 ){
   x=9;
+  enquanto(x<10){
+    se(y<9){
+      int a;
+    }
+  }
 }
 x=10;
 
@@ -12,4 +18,5 @@ enquanto(x<10){
 }
 
 funcao paulo(x,y);
+funcao NOVA(a);
 fim();

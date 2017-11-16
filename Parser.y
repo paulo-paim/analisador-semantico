@@ -9,9 +9,9 @@
 	int valor_inteiro;
 };
 %token <sval> IDENTIFICADOR
-%token <valor_inteiro> INTEIRO
+%token <sval> INTEIRO
 %token <sval> SEPARADOR
-%token <sval> VARIAVEL
+%token <sval> TIPO_PRIMITIVO
 %token <sval> INSTRUCAO
 %token <sval> ATRIBUICAO
 %token <sval> SE
@@ -41,7 +41,7 @@ corpo_programa:
 	;
 
 criacao_variaveis:
-	|VARIAVEL lista_variaveis
+	|TIPO_PRIMITIVO lista_variaveis
 	;
 
 lista_variaveis:
@@ -73,7 +73,7 @@ comando_escolha:
 ;
 
 comandos:
- |comando_atribuicao
+ |corpo_programa
  ;
 
 comando_repeticao:
