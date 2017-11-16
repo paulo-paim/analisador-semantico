@@ -29,7 +29,9 @@ atribuicao 			[=]
 "enquanto" return(ENQUANTO);
 "inicio();" return(INICIO);
 "fim();" return(FIM);
+"funcao" return(INICIO_FUNCAO);
 
+"*" return(OPERADOR_MATEMATICO);
 
 
 "int" {

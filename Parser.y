@@ -23,6 +23,8 @@
 %token <sval> ENQUANTO
 %token <sval> INICIO
 %token <sval> FIM
+%token <sval> INICIO_FUNCAO
+%token <sval> OPERADOR_MATEMATICO
 
 
 %start Inicio
@@ -35,6 +37,7 @@ corpo_programa:
 	|comando_atribuicao corpo_programa
 	|comando_escolha corpo_programa
 	|comando_repeticao corpo_programa
+	|chamada_funcao corpo_programa
 	;
 
 criacao_variaveis:
@@ -48,6 +51,21 @@ lista_variaveis:
 
 comando_atribuicao:
 	|IDENTIFICADOR ATRIBUICAO INTEIRO INSTRUCAO {printf("comando de atribuicao: %s <- %s\n", $1, $3);}
+	|IDENTIFICADOR ATRIBUICAO lista_comandos_matematicos INSTRUCAO;
+
+	;
+possibilidades_atribuicao:
+	|INTEIRO
+	|IDENTIFICADOR
+	|ABRE_CHAVE IDENTIFICADOR FECHA_CHAVE
+	|ABRE_CHAVE INTEIRO FECHA_CHAVE
+	;
+
+lista_comandos_matematicos:
+	|ABRE_CHAVE lista_comandos_matematicos FECHA_CHAVE
+	|possibilidades_atribuicao OPERADOR_MATEMATICO lista_comandos_matematicos
+	|possibilidades_atribuicao OPERADOR_MATEMATICO possibilidades_atribuicao
+
 	;
 
 comando_escolha:
@@ -60,6 +78,15 @@ comandos:
 
 comando_repeticao:
 	|ENQUANTO ABRE_CHAVE IDENTIFICADOR OPERADOR_LOGICO INTEIRO FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando repeticao\n");}
+
+chamada_funcao:
+	|INICIO_FUNCAO IDENTIFICADOR ABRE_CHAVE parametros FECHA_CHAVE INSTRUCAO {printf("chamada de funcao\n");}
+	;
+
+parametros:
+	|IDENTIFICADOR SEPARADOR parametros
+	|IDENTIFICADOR
+	;
 
 %%
 

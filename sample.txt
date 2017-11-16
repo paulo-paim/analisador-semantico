@@ -1,4 +1,5 @@
 inicio();
+X=1*(A);
 int x,y,z;
 x=10;
 se ( x < 10 ){
@@ -10,4 +11,5 @@ enquanto(x<10){
   x=1;
 }
 
+funcao paulo(x,y);
 fim();
