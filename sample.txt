@@ -2,6 +2,7 @@ inicio();
 X=1*(A+B*(paulo-henrique));
 real x,y,z;
 logico i,a;
+gfhf4
 x=10;
 se ((X)<(10&&9)){
   x=9;
