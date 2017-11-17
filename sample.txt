@@ -3,7 +3,7 @@ X=1*(A+B*(paulo-henrique));
 real x,y,z;
 logico i,a;
 x=10;
-se ( x < 10 ){
+se ((X)<(10&&9)){
   x=9;
   enquanto(x<10){
     se(y<9){

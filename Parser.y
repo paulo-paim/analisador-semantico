@@ -69,15 +69,21 @@ lista_comandos_matematicos:
 	;
 
 comando_escolha:
-|SE ABRE_CHAVE IDENTIFICADOR OPERADOR_LOGICO INTEIRO FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando logico\n");}
+|SE ABRE_CHAVE instrucao_logica FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando logico\n");}
 ;
+
+instrucao_logica:
+	 possibilidades_atribuicao OPERADOR_LOGICO possibilidades_atribuicao
+	 |ABRE_CHAVE instrucao_logica FECHA_CHAVE
+	 |possibilidades_atribuicao OPERADOR_LOGICO instrucao_logica
+
 
 comandos:
  |corpo_programa
  ;
 
 comando_repeticao:
-	|ENQUANTO ABRE_CHAVE IDENTIFICADOR OPERADOR_LOGICO INTEIRO FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando repeticao\n");}
+	|ENQUANTO ABRE_CHAVE instrucao_logica FECHA_CHAVE ABRE_COLCHETE comandos FECHA_COLCHETE {printf("comando repeticao\n");}
 
 chamada_funcao:
 	|INICIO_FUNCAO IDENTIFICADOR ABRE_CHAVE parametros FECHA_CHAVE INSTRUCAO {printf("chamada de funcao\n");}
