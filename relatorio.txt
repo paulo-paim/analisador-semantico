@@ -85,10 +85,10 @@ Conteúdo
 Para compilar e executar
 	Execute a seguinte sequência de comandos:
 	- Criação do arquivo de análiser léxica:
-		flex -o Scanner Scanner.l
+		flex -o Scanner.c Scanner.l
 
 	- Criação do arquivo de análise sintática:
-		bison -d Paser.y
+		bison -d Parser.y
 
 	- Criação do analisador
 		gcc Scanner.c Parser.tab.c -o analisador -lfl
